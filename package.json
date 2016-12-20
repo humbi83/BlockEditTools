@@ -1,8 +1,8 @@
 {
 	"name": "vscode-block-edit-tools",
 	"displayName": "Block Edit Tools",
-	"description": "Clasical Visual Studio Block editing extension. Select lines in a block char by char or word by word going past EOL & EOF restrictions that the built-in facilities have. Also included block Copy/Pase.",
-	"version": "0.0.5",
+	"description": "Clasical Visual Studio Block editing extension. Select lines in a block char by char or word by word going past EOL & EOF restrictions that the built-in facilities have. Also included block Copy/Paste.",
+	"version": "0.0.6",
 	"publisher": "ALM",
 	"repository": {
 		"url": "https://github.com/humbi83/BlockEditTools.git"
