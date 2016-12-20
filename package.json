@@ -1,0 +1,52 @@
+{
+	"name": "vscode-block-edit-tools",
+	"displayName": "Block Edit Tools",
+	"description": "Clasical Visual Studio Block editing extension. Select lines in a block char by char or word by eord going past EOL & EOF restrictions that the built-in facilities have. Also included block Copy/Pase.",
+	"version": "0.0.1",
+	"publisher": "ALM",
+	"repository": {
+		"url": ""
+	},
+	"engines": {
+		"vscode": "^0.10.1"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:alm.blockSelectUp",
+		"onCommand:alm.blockSelectDown",
+		"onCommand:alm.blockSelectLeft",
+		"onCommand:alm.blockSelectRight",
+		"onCommand:alm.blockSelectWordLeft",
+		"onCommand:alm.blockSelectWordRight",
+		"onCommand:alm.blockCopy",
+		"onCommand:alm.blockCut",
+		"onCommand:alm.blockPaste"
+	],
+	"main": "./out/src/extension",
+	"contributes": {
+		"commands": [ ],
+		"keybindings": [
+			{ "key": "ctrl+shift+up"   ,  "when": "editorTextFocus", "command": "alm.blockSelectUp" },
+			{ "key": "ctrl+shift+down" ,  "when": "editorTextFocus", "command": "alm.blockSelectDown" },
+			{ "key": "ctrl+shift+left" ,  "when": "editorTextFocus", "command": "alm.blockSelectLeft" },
+			{ "key": "ctrl+shift+right",  "when": "editorTextFocus", "command": "alm.blockSelectRight" },
+			{ "key": "ctrl+alt+shift+up"   ,  "when": "editorTextFocus", "command": "alm.blockSelectUp" },
+			{ "key": "ctrl+alt+shift+down" ,  "when": "editorTextFocus", "command": "alm.blockSelectDown" },
+			{ "key": "ctrl+alt+shift+left",  "when": "editorTextFocus", "command": "alm.blockSelectWordLeft" },
+			{ "key": "ctrl+alt+shift+right",  "when": "editorTextFocus", "command": "alm.blockSelectWordRight" },
+			{ "key": "ctrl+alt+shift+c",  "when": "editorTextFocus", "command": "alm.blockCopy" },
+			{ "key": "ctrl+alt+shift+x",  "when": "editorTextFocus && !editorReadonly", "command": "alm.blockCut" },
+			{ "key": "ctrl+alt+shift+v",  "when": "editorTextFocus && !editorReadonly", "command": "alm.blockPaste" }
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "node ./node_modules/vscode/bin/compile",
+		"compile": "node ./node_modules/vscode/bin/compile -watch -p ./"
+	},
+	"devDependencies": {
+		"typescript": "^1.6.2",
+		"vscode": "0.10.x"
+	}
+}
