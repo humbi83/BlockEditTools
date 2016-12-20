@@ -36,25 +36,25 @@ export class SelBlock {
 
         let ret = SelBlock.newInstance(
             mainSele.anchor.character,
-            isYRev ? maxY : minY ,
+            isYRev ? maxY : minY,
             mainSele.active.character,
-            !isYRev ? maxY : minY );
+            !isYRev ? maxY : minY);
 
         return ret;
     }
 
-    public getCursorAsSelection() : vscode.Selection{
-	    let se = this;
+    public getCursorAsSelection(): vscode.Selection {
+        let se = this;
 
-		let cursorSelection = new vscode.Selection(
-			se.isRevY ? se.top  : se.bottom,
-			se.isRevX ? se.left : se.right,
-			se.isRevY ? se.top  : se.bottom,
-			se.isRevX ? se.left : se.right
-		);
-        
-        return cursorSelection; 
-    } 
+        let cursorSelection = new vscode.Selection(
+            se.isRevY ? se.top : se.bottom,
+            se.isRevX ? se.left : se.right,
+            se.isRevY ? se.top : se.bottom,
+            se.isRevX ? se.left : se.right
+        );
+
+        return cursorSelection;
+    }
 
     //Ok .. these are setters only .. I cannot tell from the it's name
     set activeChar(value: number) {
@@ -85,12 +85,12 @@ export class SelBlock {
 
     get isRevX(): boolean { let v = this.mAnchSelection; return v.active.character < v.anchor.character; }
     get isRevY(): boolean { let v = this.mAnchSelection; return v.active.line < v.anchor.line; }
-    get left  (): number { let v = this.mAnchSelection; return this.isRevX ? v.active.character : v.anchor.character; }
-    get right (): number { let v = this.mAnchSelection; return !this.isRevX ? v.active.character : v.anchor.character; }
-    get top   (): number { let v = this.mAnchSelection; return this.isRevY ? v.active.line : v.anchor.line; }
+    get left(): number { let v = this.mAnchSelection; return this.isRevX ? v.active.character : v.anchor.character; }
+    get right(): number { let v = this.mAnchSelection; return !this.isRevX ? v.active.character : v.anchor.character; }
+    get top(): number { let v = this.mAnchSelection; return this.isRevY ? v.active.line : v.anchor.line; }
     get bottom(): number { let v = this.mAnchSelection; return !this.isRevY ? v.active.line : v.anchor.line; }
 
-    get width (): number { return this.right - this.left + 1; }
+    get width(): number { return this.right - this.left + 1; }
     get height(): number { return this.bottom - this.top + 1; }
 
     get anchor(): vscode.Position { return this.mAnchSelection.anchor; }
@@ -108,7 +108,7 @@ export class LineSelBlockMorpher implements ISelBlockTask {
     constructor(public mNoLinesToExtend: number) { }
     public retsPromise() { return true; }
     public apply(): any {
-       
+
         let te: vscode.TextEditor = vscode.window.activeTextEditor;
         // console.log("LineSelBlockMorpher Enter: "+ te.document.lineCount + " this.mNoLinesToExtend: " + this.mNoLinesToExtend);
 
@@ -122,12 +122,12 @@ export class LineSelBlockMorpher implements ISelBlockTask {
         //let pos = te.document.positionAt(Math.max(0,te.document.getText.length-1));
         //let pos2 = new vscode.Position(Math.max(0,te.document.lineCount - 1), Math.max(0, te.document.getText().length));
 
-        let linedIdx = Math.max(0,te.document.lineCount - 1);
+        let linedIdx = Math.max(0, te.document.lineCount - 1);
         let pos2 = new vscode.Position(linedIdx, Math.max(0, te.document.lineAt(linedIdx).text.length));
-       // console.log("stufffff ",pos2.line, pos2.character);
+        // console.log("stufffff ",pos2.line, pos2.character);
         wsEdit.insert(te.document.uri, pos2, utils.getNL(this.mNoLinesToExtend));
 
-       / console.log("LineSelBlockMorpher Exit:");
+        // console.log("LineSelBlockMorpher Exit:");
 
         return vscode.workspace.applyEdit(wsEdit);
     }
@@ -142,13 +142,13 @@ export class CharSelBlockMorpher implements ISelBlockTask {
         let wsEdit = new vscode.WorkspaceEdit();
 
         for (const line of this.mLines) {
-           // console.log("enter");
-           // console.log(line.line, line.noWS);
+            // console.log("enter");
+            // console.log(line.line, line.noWS);
 
             let pos2 = new vscode.Position(line.line, Math.max(0, te.document.lineAt(line.line).text.length));
 
             wsEdit.insert(te.document.uri, pos2, utils.getWS(line.noWS));
-           // console.log("exit");
+            // console.log("exit");
         }
 
         //Hopefully this actually works
@@ -200,14 +200,14 @@ export class SelBlockValidator {
         let ret = [];
         let te = vscode.window.activeTextEditor;
         let doc = te.document;
-   
+
         if (this.mSel.bottom >= doc.lineCount) {
             let missingLines = this.mSel.bottom - doc.lineCount + 1;
             //console.log("missingLines: " + missingLines);
             ret.push(new LineSelBlockMorpher(missingLines));
         }
 
-        let neededMinLen = Math.max(this.mSel.anchor.character , this.mSel.active.character);
+        let neededMinLen = Math.max(this.mSel.anchor.character, this.mSel.active.character);
 
         let charSelInput: { line: number, noWS: number }[] = [];
 
